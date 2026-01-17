@@ -2,7 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { LESSONS, AUTHOR_NAME } from './constants';
 import { Category, Lesson } from './types';
 import LessonCard from './components/LessonCard';
-import { Search, Terminal, Coffee, Layers, BrainCircuit, GraduationCap, X, BookOpen } from 'lucide-react';
+import { Search, Terminal, Coffee, Layers, BrainCircuit, GraduationCap, X, BookOpen, ExternalLink, Github, BookText } from 'lucide-react';
 
 const App: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -112,9 +112,19 @@ const App: React.FC = () => {
            <h1 className="text-4xl md:text-6xl font-black text-slate-900 dark:text-white mb-6 tracking-tight">
              What I've Learned <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-violet-600 dark:from-indigo-400 dark:to-violet-400">So Far.</span>
            </h1>
-           <p className="text-lg md:text-xl text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed font-medium">
+           <p className="text-lg md:text-xl text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed font-medium mb-6">
              A curated interactive collection of professional insights from <span className="text-slate-900 dark:text-slate-200">{AUTHOR_NAME}</span>.
            </p>
+           <a 
+               href="https://dev.to/suckup_de/what-have-i-learned-so-far-in-my-job-3o8f" 
+               target="_blank" 
+               rel="noopener noreferrer"
+               className="inline-flex items-center gap-2 text-sm text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 font-medium transition-colors"
+           >
+               <BookText size={16} />
+               Originally published on DEV Community
+               <ExternalLink size={14} />
+           </a>
         </div>
 
         {/* Results Info */}
@@ -182,14 +192,40 @@ const App: React.FC = () => {
       </main>
 
       <footer className="mt-20 border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 py-12">
-        <div className="max-w-7xl mx-auto px-4 text-center">
-            <div className="flex justify-center items-center gap-2 mb-4 text-slate-900 dark:text-white font-bold text-lg">
-                <BrainCircuit size={20} className="text-indigo-600" />
-                Dev Wisdom
+        <div className="max-w-7xl mx-auto px-4">
+            <div className="text-center mb-8">
+                <div className="flex justify-center items-center gap-2 mb-4 text-slate-900 dark:text-white font-bold text-lg">
+                    <BrainCircuit size={20} className="text-indigo-600" />
+                    Dev Wisdom
+                </div>
+                <p className="text-slate-500 text-sm mb-6">
+                    Based on the blog post by {AUTHOR_NAME}.<br/>Built with React & Tailwind.
+                </p>
+                
+                {/* Links Section */}
+                <div className="flex flex-col sm:flex-row justify-center items-center gap-4">
+                    <a 
+                        href="https://dev.to/suckup_de/what-have-i-learned-so-far-in-my-job-3o8f" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 px-5 py-2.5 bg-indigo-50 hover:bg-indigo-100 dark:bg-indigo-900/20 dark:hover:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 font-medium rounded-lg transition-all hover:shadow-md hover:scale-105 transform"
+                    >
+                        <BookText size={18} />
+                        Read Original Blog Post
+                        <ExternalLink size={16} />
+                    </a>
+                    <a 
+                        href="https://github.com/voku/learnings" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 px-5 py-2.5 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-medium rounded-lg transition-all hover:shadow-md hover:scale-105 transform"
+                    >
+                        <Github size={18} />
+                        Contribute on GitHub
+                        <ExternalLink size={16} />
+                    </a>
+                </div>
             </div>
-            <p className="text-slate-500 text-sm">
-                Based on the blog post by {AUTHOR_NAME}.<br/>Built with React & Tailwind.
-            </p>
         </div>
       </footer>
     </div>
