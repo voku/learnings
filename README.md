@@ -8,15 +8,19 @@ A curated interactive collection of professional development insights and lesson
 
 - **Interactive Learning Cards**: Browse through categorized lessons with expandable content
 - **Smart Search**: Find lessons by title, content, or tags
-- **Category Organization**: Lessons organized into System Administration, Application Development, and General categories
+- **Category Organization**: Lessons organized into Agentic Coding, System Administration, Application Development, and General categories
 - **Dark Mode Support**: Automatic theme adaptation for comfortable viewing
 - **Responsive Design**: Works seamlessly on desktop and mobile devices
+- **Lesson Lifecycle Badges**: Lessons can be marked `active`, `evolved`, or `deprecated` to show how the underlying advice has aged
 
 ## 📚 Content Categories
 
-1. **System Administration**: Infrastructure, operations, and IT fundamentals
-2. **Application Development**: Software engineering best practices and principles
-3. **General**: Career development, soft skills, and continuous learning
+1. **Agentic Coding**: Engineering lessons for working with coding agents — process, context, verification, and memory
+2. **System Administration**: Infrastructure, operations, and IT fundamentals
+3. **Application Development**: Software engineering best practices and principles
+4. **General**: Career development, soft skills, and continuous learning
+
+Coding agents do not replace engineering discipline — they make weak process, vague context, missing verification, and bad abstractions fail faster. Several pre-agent lessons have been kept but annotated with lifecycle metadata (see below) to show how their framing has evolved rather than being deleted.
 
 ## 🛠️ Run Locally
 
@@ -92,6 +96,17 @@ When working with this codebase, the most important files to understand are:
 - **`.github/workflows/deploy.yml`** - GitHub Pages deployment workflow
 
 To add new lessons, edit the `LESSONS` array in `constants.tsx`. Each lesson should follow the `Lesson` type definition from `types.ts`.
+
+### Lifecycle Metadata
+
+The `Lesson` type supports optional fields to track how a lesson's relevance changes over time:
+
+- **`status`**: `'active' | 'evolved' | 'deprecated'`. Defaults to `active` when omitted. Use `evolved` for a lesson that is still true but incomplete (e.g. it needs modern, agent-era framing). Use `deprecated` only when the original framing is now actively misleading.
+- **`era`**: `'pre-agent' | 'agent-era'`. Marks which engineering era the lesson was written for.
+- **`supersededBy`**: `string[]` of lesson IDs that refine or replace this one. Shown on the card as a "Superseded by" reference.
+- **`note`**: A short string explaining how the lesson's framing has changed.
+
+When a lesson gets superseded, **do not delete it**. Old lessons are usually still true in spirit — mark them `evolved` (or, rarely, `deprecated`) and add a `note` and `supersededBy` pointing at the newer lesson(s) instead. This keeps the history of "what we used to believe vs. what we believe now" visible rather than erasing it.
 
 ## 🤝 Contributing
 

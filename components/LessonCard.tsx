@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Lesson, Category } from '../types';
-import { ChevronDown, ChevronUp, Quote, ExternalLink, Terminal, Layers, Coffee } from 'lucide-react';
+import { ChevronDown, ChevronUp, Quote, ExternalLink, Terminal, Layers, Coffee, Bot } from 'lucide-react';
 import CodeBlock from './CodeBlock';
 
 interface LessonCardProps {
@@ -14,7 +14,8 @@ const LessonCard: React.FC<LessonCardProps> = ({ lesson, globalExpanded }) => {
   // LOGIC: A card is "expandable" (interactive) ONLY if:
   // 1. It has extra content (quote, code snippets, links)
   // 2. OR the text content is long enough to warrant truncation (> 160 chars)
-  const hasExtras = !!lesson.quote || (lesson.codeSnippets && lesson.codeSnippets.length > 0) || (lesson.links && lesson.links.length > 0);
+  const hasExtras = !!lesson.quote || (lesson.codeSnippets && lesson.codeSnippets.length > 0) || (lesson.links && lesson.links.length > 0)
+    || !!lesson.note || (lesson.supersededBy && lesson.supersededBy.length > 0);
   const isLongContent = lesson.content.length > 160; 
   const isExpandable = hasExtras || isLongContent;
 
@@ -48,10 +49,34 @@ const LessonCard: React.FC<LessonCardProps> = ({ lesson, globalExpanded }) => {
       badgeClass: "text-amber-700 bg-amber-50 border-amber-100 dark:text-amber-300 dark:bg-amber-900/30 dark:border-amber-700/50",
       icon: Coffee
     },
+    [Category.AGENTIC_CODING]: {
+      accent: "bg-violet-500",
+      badgeClass: "text-violet-700 bg-violet-50 border-violet-100 dark:text-violet-300 dark:bg-violet-900/30 dark:border-violet-700/50",
+      icon: Bot
+    },
   };
 
   const config = categoryConfig[lesson.category];
   const CategoryIcon = config.icon;
+
+  // Lifecycle status - defaults to 'active' when not set on older content.
+  const statusConfig = {
+    active: {
+      label: "ACTIVE",
+      badgeClass: "text-slate-600 bg-slate-50 border-slate-200 dark:text-slate-300 dark:bg-slate-700/40 dark:border-slate-600/50"
+    },
+    evolved: {
+      label: "EVOLVED",
+      badgeClass: "text-amber-700 bg-amber-50 border-amber-200 dark:text-amber-300 dark:bg-amber-900/30 dark:border-amber-700/50"
+    },
+    deprecated: {
+      label: "DEPRECATED",
+      badgeClass: "text-rose-700 bg-rose-50 border-rose-200 dark:text-rose-300 dark:bg-rose-900/30 dark:border-rose-700/50"
+    }
+  } as const;
+
+  const status = lesson.status ?? 'active';
+  const statusBadge = statusConfig[status];
 
   return (
     <div 
@@ -69,11 +94,16 @@ const LessonCard: React.FC<LessonCardProps> = ({ lesson, globalExpanded }) => {
         onClick={handleToggle}
       >
         <div className="flex justify-between items-start gap-3 mb-4">
-           {/* Distinct Category Badge */}
-           <span className={`inline-flex items-center px-2.5 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider border ${config.badgeClass}`}>
-              <CategoryIcon size={12} className="mr-1.5" strokeWidth={2.5} />
-              {lesson.category}
-            </span>
+           {/* Distinct Category Badge + Lifecycle Status Badge */}
+           <div className="flex flex-wrap items-center gap-2">
+             <span className={`inline-flex items-center px-2.5 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider border ${config.badgeClass}`}>
+                <CategoryIcon size={12} className="mr-1.5" strokeWidth={2.5} />
+                {lesson.category}
+              </span>
+             <span className={`inline-flex items-center px-2 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider border ${statusBadge.badgeClass}`}>
+                {statusBadge.label}
+              </span>
+           </div>
 
           {/* Toggle Button - Only shown if content warrants it */}
           {isExpandable && (
@@ -146,6 +176,25 @@ const LessonCard: React.FC<LessonCardProps> = ({ lesson, globalExpanded }) => {
               isBad={snippet.isBadExample}
             />
           ))}
+
+          {/* Lifecycle Note */}
+          {lesson.note && (
+            <div className="my-5 p-3 rounded-lg bg-slate-100/70 dark:bg-slate-700/30 border border-slate-200 dark:border-slate-600/50 text-sm text-slate-600 dark:text-slate-300">
+              <span className="font-semibold">{statusBadge.label}:</span> {lesson.note}
+            </div>
+          )}
+
+          {/* Superseded By */}
+          {lesson.supersededBy && lesson.supersededBy.length > 0 && (
+            <div className="mb-5 flex flex-wrap items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
+              <span className="font-semibold uppercase tracking-wider">Superseded by:</span>
+              {lesson.supersededBy.map(id => (
+                <span key={id} className="px-2 py-0.5 bg-slate-100 dark:bg-slate-700 rounded-md font-mono text-[11px] text-slate-600 dark:text-slate-300">
+                  {id}
+                </span>
+              ))}
+            </div>
+          )}
 
           {/* External Links */}
           {lesson.links && lesson.links.length > 0 && (
