@@ -2,7 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { LESSONS, AUTHOR_NAME } from './constants';
 import { Category, Lesson } from './types';
 import LessonCard from './components/LessonCard';
-import { Search, Terminal, Coffee, Layers, BrainCircuit, GraduationCap, X, BookOpen, ExternalLink, Github, BookText } from 'lucide-react';
+import { Search, Terminal, Coffee, Layers, BrainCircuit, GraduationCap, X, BookOpen, ExternalLink, Github, BookText, Bot } from 'lucide-react';
 
 const App: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -23,7 +23,7 @@ const App: React.FC = () => {
     const groups: Partial<Record<Category, typeof LESSONS>> = {};
     
     // Define explicit order for categories to appear
-    const order = [Category.SYS_ADMIN, Category.APP_DEV, Category.GENERAL];
+    const order = [Category.AGENTIC_CODING, Category.SYS_ADMIN, Category.APP_DEV, Category.GENERAL];
 
     order.forEach(cat => {
       const lessonsInCat = filtered.filter(l => l.category === cat);
@@ -41,12 +41,14 @@ const App: React.FC = () => {
     [Category.SYS_ADMIN]: Terminal,
     [Category.APP_DEV]: Layers,
     [Category.GENERAL]: Coffee,
+    [Category.AGENTIC_CODING]: Bot,
   };
 
   const CategoryColors = {
     [Category.SYS_ADMIN]: "text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/20 border-indigo-100 dark:border-indigo-800",
     [Category.APP_DEV]: "text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-900/20 border-emerald-100 dark:border-emerald-800",
     [Category.GENERAL]: "text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-900/20 border-amber-100 dark:border-amber-800",
+    [Category.AGENTIC_CODING]: "text-violet-600 dark:text-violet-400 bg-violet-50 dark:bg-violet-900/20 border-violet-100 dark:border-violet-800",
   };
 
   return (

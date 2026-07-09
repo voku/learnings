@@ -46,7 +46,11 @@ export const LESSONS: Lesson[] = [
     category: Category.SYS_ADMIN,
     title: "Read the official documentation",
     content: "StackOverflow gives answers, but documentation explains the 'why' and 'how'. Reading specs helps you understand the problem deeply and solve similar future problems.",
-    tags: ['Documentation', 'Research']
+    tags: ['Documentation', 'Research'],
+    status: 'evolved',
+    era: 'pre-agent',
+    supersededBy: ['agent-2', 'agent-6'],
+    note: 'Still true, but source reading now needs explicit context selection and verification when agents are involved.'
   },
   {
     id: 'sys-5',
@@ -102,7 +106,11 @@ export const LESSONS: Lesson[] = [
         description: "Finding specific file types on a domain"
       }
     ],
-    tags: ['Research', 'Google Hacks']
+    tags: ['Research', 'Google Hacks'],
+    status: 'evolved',
+    era: 'pre-agent',
+    supersededBy: ['agent-2'],
+    note: 'Search skills still matter, but agent-era work depends more on source quality, context framing, and validation than raw search operators.'
   },
 
   // --- Application Development ---
@@ -126,7 +134,11 @@ export const LESSONS: Lesson[] = [
     category: Category.APP_DEV,
     title: "Think in modules and packages",
     content: "Don't repeat logic. Design applications in interchangeable parts. Minimize coupling. Use package managers like npm or composer.",
-    tags: ['Architecture', 'Modularization']
+    tags: ['Architecture', 'Modularization'],
+    status: 'evolved',
+    era: 'pre-agent',
+    supersededBy: ['agent-8', 'agent-10'],
+    note: 'Still valid, but agent-era architecture also needs explicit boundaries that tools can understand and verify.'
   },
   {
     id: 'dev-4',
@@ -155,14 +167,22 @@ export const LESSONS: Lesson[] = [
     title: "try { tests() }",
     content: "Test cases you haven't considered. Add a test whenever an error occurs so it doesn't regress.",
     links: [{ text: "Big List of Naughty Strings", url: "https://github.com/minimaxir/big-list-of-naughty-strings" }],
-    tags: ['Testing', 'QA']
+    tags: ['Testing', 'QA'],
+    status: 'evolved',
+    era: 'pre-agent',
+    supersededBy: ['agent-6'],
+    note: 'Regression tests remain essential, but agent output also needs diff review, static analysis, and explicit validation.'
   },
   {
     id: 'dev-8',
     category: Category.APP_DEV,
     title: "Automate your tests",
     content: "Tests only help if executed. Automate them. Avoid too many parameters in functions to keep testing manageable.",
-    tags: ['CI/CD', 'Automation']
+    tags: ['CI/CD', 'Automation'],
+    status: 'evolved',
+    era: 'pre-agent',
+    supersededBy: ['agent-6'],
+    note: 'Automation is now a gate for human and agent work, not just a convenience.'
   },
   {
     id: 'dev-9',
@@ -323,7 +343,11 @@ export const LESSONS: Lesson[] = [
         isBadExample: true
       }
     ],
-    tags: ['Searchability', 'Maintenance']
+    tags: ['Searchability', 'Maintenance'],
+    status: 'evolved',
+    era: 'pre-agent',
+    supersededBy: ['agent-7'],
+    note: 'Searchability now includes grep, static analysis, tests, and agent-readable structure.'
   },
   {
     id: 'dev-25',
@@ -344,7 +368,11 @@ export const LESSONS: Lesson[] = [
     category: Category.APP_DEV,
     title: "DRY - Don't Repeat Yourself",
     content: "Avoid redundancy. Make solutions easy to find so others don't re-invent them.",
-    tags: ['DRY', 'Refactoring']
+    tags: ['DRY', 'Refactoring'],
+    status: 'evolved',
+    era: 'pre-agent',
+    supersededBy: ['agent-8'],
+    note: 'Avoid duplicate decisions, not necessarily duplicate code. The wrong abstraction is more expensive than local duplication.'
   },
 
   // --- General ---
@@ -405,7 +433,11 @@ export const LESSONS: Lesson[] = [
     category: Category.APP_DEV,
     title: "Read the Reference",
     content: "Don't go to Stack Overflow, don't ask the LLM, don't guess, just go straight to the source (e.g., Apache docs, Python Standard Library). It’s surprisingly accessible and accurate.",
-    tags: ['Documentation', 'Learning', 'Best Practices']
+    tags: ['Documentation', 'Learning', 'Best Practices'],
+    status: 'evolved',
+    era: 'pre-agent',
+    supersededBy: ['agent-2', 'agent-6'],
+    note: 'Do not ask an ungrounded LLM. Asking an agent is fine when the answer is source-backed, scoped, and verified.'
   },
   {
     id: 'best-2',
@@ -500,11 +532,15 @@ export const LESSONS: Lesson[] = [
     category: Category.APP_DEV,
     title: "Don't Guess",
     content: "In the face of ambiguity, refuse the temptation to guess. Guessing leads to bugs or wrong mental models that haunt you later.",
-    quote: { 
-      text: "In the Face of Ambiguity, Refuse the Temptation to Guess", 
-      author: "The Zen of Python" 
+    quote: {
+      text: "In the Face of Ambiguity, Refuse the Temptation to Guess",
+      author: "The Zen of Python"
     },
-    tags: ['Best Practices', 'Python', 'Rigor']
+    tags: ['Best Practices', 'Python', 'Rigor'],
+    status: 'evolved',
+    era: 'pre-agent',
+    supersededBy: ['agent-5'],
+    note: 'The stronger rule is: assumptions must be explicit, reviewed, and validated.'
   },
   {
     id: 'best-15',
@@ -512,5 +548,87 @@ export const LESSONS: Lesson[] = [
     title: "Keep It Simple (The Best)",
     content: "Clever engineers write clever code. Exceptional engineers write simple code. Simple is more maintainable than complex.",
     tags: ['KISS', 'Simplicity', 'Maintenance']
+  },
+
+  // --- Agentic Coding ---
+  {
+    id: 'agent-1',
+    category: Category.AGENTIC_CODING,
+    title: "Agents need process, not vibes",
+    content: "Coding agents are useful only inside a controlled workflow. Define the task, scope the files, load relevant context, verify the result, review blind spots, and capture what was learned. Asking an agent to “just fix it” is not engineering. It is gambling with better autocomplete.",
+    tags: ['Agents', 'Workflow', 'Verification'],
+    era: 'agent-era'
+  },
+  {
+    id: 'agent-2',
+    category: Category.AGENTIC_CODING,
+    title: "Context is a dependency",
+    content: "Too little context makes agents guess. Too much context makes them drown. Good agent workflows select only the rules, files, constraints, and previous failures that matter for the current task.",
+    tags: ['Context', 'Prompting', 'Precision'],
+    era: 'agent-era'
+  },
+  {
+    id: 'agent-3',
+    category: Category.AGENTIC_CODING,
+    title: "Memory must be earned",
+    content: "Not every observation deserves to become a rule. Some findings are temporary, vague, duplicated, or wrong. Durable project memory needs evidence, validation, and human approval.",
+    tags: ['Learning', 'Memory', 'Governance'],
+    era: 'agent-era'
+  },
+  {
+    id: 'agent-4',
+    category: Category.AGENTIC_CODING,
+    title: "Forgetting is part of learning",
+    content: "A good learning system must reject stale, harmful, vague, or duplicated guidance. Keeping everything is not wisdom. It is hoarding with Markdown.",
+    tags: ['Learning', 'Maintenance', 'Knowledge Management'],
+    era: 'agent-era'
+  },
+  {
+    id: 'agent-5',
+    category: Category.AGENTIC_CODING,
+    title: "Assumptions are bugs waiting for a timestamp",
+    content: "When an agent or developer has to assume something, write it down. An explicit assumption can be checked, challenged, or deleted. A hidden assumption becomes architecture by accident.",
+    tags: ['Assumptions', 'Architecture', 'Debugging'],
+    era: 'agent-era'
+  },
+  {
+    id: 'agent-6',
+    category: Category.AGENTIC_CODING,
+    title: "Verification beats confidence",
+    content: "A confident answer is not a result. Run the tests. Run static analysis. Check the diff. Validate the behavior. Confidence without verification is just autocomplete wearing a tie.",
+    tags: ['Testing', 'Static Analysis', 'Quality'],
+    era: 'agent-era'
+  },
+  {
+    id: 'agent-7',
+    category: Category.AGENTIC_CODING,
+    title: "Source code should be searchable, analyzable, and promptable",
+    content: "Good code is not only readable by humans. It must be easy to grep, statically analyze, test, and explain to a coding agent. Hidden magic and string soup make both humans and tools worse.",
+    tags: ['Searchability', 'Static Analysis', 'Maintainability'],
+    era: 'agent-era'
+  },
+  {
+    id: 'agent-8',
+    category: Category.AGENTIC_CODING,
+    title: "Duplication can be cheaper than the wrong abstraction",
+    content: "Do not merge code paths only because they look similar. If two modules belong to different domains or will change for different reasons, keep them separate until the shared concept is real.",
+    tags: ['YAGNI', 'Architecture', 'DRY'],
+    era: 'agent-era'
+  },
+  {
+    id: 'agent-9',
+    category: Category.AGENTIC_CODING,
+    title: "Make work resumable",
+    content: "A task should survive interruptions. Keep the plan, decisions, validation notes, and checkpoints visible. Future-you, another developer, or an agent should be able to continue without reconstructing the crime scene from terminal scrollback.",
+    tags: ['Developer Experience', 'Sessions', 'Handoff'],
+    era: 'agent-era'
+  },
+  {
+    id: 'agent-10',
+    category: Category.AGENTIC_CODING,
+    title: "Agents expose weak architecture faster",
+    content: "If a coding agent constantly misunderstands a module, the agent might be bad. Or the code might have unclear boundaries, hidden coupling, bad names, and undocumented rules. Usually both.",
+    tags: ['Architecture', 'Maintainability', 'Legacy Code'],
+    era: 'agent-era'
   }
 ];
