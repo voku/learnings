@@ -1,0 +1,44 @@
+name: Materialize Codelight manifesto
+
+on:
+  push:
+    branches:
+      - docs/codelight-manifesto
+    paths:
+      - .codelight-manifesto.gz.b64
+      - .github/workflows/materialize-codelight-manifesto.yml
+
+permissions:
+  contents: write
+
+jobs:
+  materialize:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: docs/codelight-manifesto
+
+      - name: Materialize exact manifesto source
+        shell: bash
+        run: |
+          set -euo pipefail
+          base64 --decode .codelight-manifesto.gz.b64 | gzip --decompress > CODELIGHT_MANIFESTO.md
+          printf '%s  %s\n' \
+            'ae00b764742ac58942fdea6f0549b025eac111af1ec09a0102a7034a1b91a637' \
+            'CODELIGHT_MANIFESTO.md' | sha256sum --check --strict
+          grep -Fq '**Version:** 3.1' CODELIGHT_MANIFESTO.md
+          grep -Fq 'standalone engineering reasoning contract' CODELIGHT_MANIFESTO.md
+          grep -Fq 'Conversation context follows the same rule.' CODELIGHT_MANIFESTO.md
+          grep -Fq 'A request for missing factual knowledge is information gathering' CODELIGHT_MANIFESTO.md
+
+      - name: Commit canonical Markdown and remove bootstrap payload
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git rm .codelight-manifesto.gz.b64 .github/workflows/materialize-codelight-manifesto.yml
+          git add CODELIGHT_MANIFESTO.md
+          git commit -m 'docs: publish Codelight manifesto v3.1'
+          git push origin HEAD:docs/codelight-manifesto
