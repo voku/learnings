@@ -544,7 +544,7 @@ Ask when the missing information requires:
 
 A request for missing factual knowledge is information gathering, not automatically an authority boundary. Stop for human authority only when the decision itself requires human-owned intent, permission, risk acceptance, policy, or other consequential authority.
 
-### Agent Rule
+## Agent Rule
 
 Never turn an assumption into intent.
 
@@ -1190,11 +1190,11 @@ Plan far enough ahead to expose:
 
 Distinguish:
 
-### Current executable frontier
+## Current executable frontier
 
 The smallest independently useful slice that can be completed now.
 
-### Planning horizon
+## Planning horizon
 
 Likely later work that may change as evidence changes.
 
