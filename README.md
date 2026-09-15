@@ -4,6 +4,26 @@ A curated interactive collection of professional development insights and lesson
 
 **Live Demo:** [https://voku.github.io/learnings/](https://voku.github.io/learnings/)
 
+## Codelight Manifesto
+
+The canonical long-form **Codelight Manifesto for Coding Agents** lives in
+[`CODELIGHT_MANIFESTO.md`](CODELIGHT_MANIFESTO.md). It is the living reference
+for technology-neutral engineering principles, their rationale, and their
+evolution.
+
+The compact runtime projection of its generative core lives separately in
+[`voku/agent-skills`](https://github.com/voku/agent-skills) as
+`engineering-codelight`. That skill is intentionally smaller than the manifesto
+and is suitable for selective agent context. It is not a second canonical copy.
+
+Project workflows remain authoritative for executable lifecycle state, approvals,
+and required evidence. For example, `voku/agent-loop` can route to the portable
+Codelight skill while retaining authority over its own Contract/Run lifecycle.
+
+General engineering-principle changes should begin in the manifesto. Distill a
+change into `engineering-codelight` only when it belongs in the compact generative
+core; keep project-specific workflow rules with the project that owns them.
+
 ## 🚀 Features
 
 - **Interactive Learning Cards**: Browse through categorized lessons with expandable content
