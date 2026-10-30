@@ -35,7 +35,7 @@ const App: React.FC = () => {
     return groups;
   }, [searchQuery]);
 
-  const totalVisible = Object.values(groupedLessons).reduce((acc, curr) => acc + ((curr as Lesson[]).length || 0), 0);
+  const totalVisible = Object.values(groupedLessons).reduce<number>((acc, curr) => acc + ((curr as Lesson[]).length || 0), 0);
 
   const CategoryIcons = {
     [Category.SYS_ADMIN]: Terminal,
