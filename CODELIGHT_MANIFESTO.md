@@ -2,11 +2,11 @@
 
 > Build systems that make reality visible, uncertainty explicit, assumptions challengeable, knowledge transferable, failures recoverable, and correct behavior easier than incorrect behavior.
 
-**Version:** 3.1  
-**Updated:** September 2026  
+**Version:** 3.2  
+**Updated:** November 23, 2026  
 **Status:** Living manifesto  
 **Audience:** Coding agents and the humans who authorize them  
-**Revision focus:** Clarifies reasoning vs. lifecycle authority, conversational instruction provenance, and factual questions vs. human-authority decisions.
+**Revision focus:** Carries forward November goal-continuity guidance and makes project-specific quality criteria, risk-based verification, and operational learning explicit.
 
 ---
 
@@ -356,7 +356,7 @@ Do not destroy that evidence merely to make a system appear quiet.
 
 Reliability is not the absence of failure.
 
-It is the ability to understand and recover from it.
+It includes sustained expected behavior, early detection of degradation, containment, and recovery when failure occurs.
 
 ---
 
@@ -977,13 +977,25 @@ The ability to be proven wrong is a feature.
 
 ---
 
+## Goal Continuity Across Contexts
+
+A human correction usually changes evidence, assumptions, or constraints; it does not replace the original objective. Reconcile the correction with that objective before choosing the next action.
+
+Humans own intent, scope, and consequential approvals. Agents own authorized investigation, execution, verification, and truthful reporting. Neither should mistake a convincing explanation or a prepared handoff for a verified outcome.
+
+A chat response, a coding-agent run, and a durable external job have different runtime guarantees. Claim continued execution only when an executor or resumable job was actually started. Do not label a host-session limit as an agent decision failure, or interrupt an active authorized run merely because an intermediate answer sounds complete.
+
+Do not return already delegated routine decisions to the human. Before yielding on unfinished work, identify the actual blocker or next executable action. Measure avoidable human interventions per independently verified completed task, while separately reporting failures and abandoned tasks.
+
+---
+
 # T — Test, Measure, Review, and Re-ground
 
 > Verification is part of implementation.
 
 Use the smallest reliable evidence that addresses the actual risk.
 
-Broaden only when shared impact justifies it.
+Broaden only when shared impact justifies it. Assess business consequence, affected users and data, historical failure patterns, change surface, detectability, and reversibility. A developer's project experience helps identify likely failure modes, but neither experience nor a passing suite proves that the relevant behavior is correct.
 
 Typical progression:
 
@@ -1063,6 +1075,41 @@ Optimize the measured bottleneck.
 Do not trade clarity for theoretical speed.
 
 Fast wrong code is still wrong.
+
+---
+
+## Software Quality Is Project-Specific and Measurable
+
+Software quality is not a universal score, a count of tests, or the absence of patches. It is the degree to which a system meets its intended behavior and project-specific constraints, and remains safe to operate and change.
+
+Different changes justify different evidence. A copy change, a cache invalidation change, and a permission change do not share the same failure mechanisms or blast radius.
+
+For material changes, select relevant dimensions and record what would establish them:
+
+| Dimension | What to establish | Possible evidence or measure |
+| --- | --- | --- |
+| **Functionality** | The agreed behavior and acceptance criteria are satisfied. | Acceptance scenarios exercised against the actual candidate; observed outcomes. |
+| **Testing and regressions** | Checks cover plausible failure mechanisms and existing behavior that must remain intact. | Focused and integration test results; a regression check shown to detect the original failure where practical. |
+| **Code quality** | No unjustified increase in errors, complexity, or coupling. | New static-analysis violations relative to the accepted baseline; measured complexity or dependency changes; reviewed exceptions. |
+| **Security** | Trust boundaries and applicable security policy are satisfied. | Relevant security checks and threat scenarios; unresolved material findings explicitly blocked or accepted by the authorized risk owner. |
+| **Performance** | The affected workload remains within agreed limits. | Representative workload, environment, baseline, latency percentiles, throughput, resource use, and before/after measurements where applicable. |
+| **Reliability** | The service meets its agreed behavior over time, including failure handling. | Availability, error rates, SLO/error-budget measurements, and failure/recovery checks where relevant. |
+| **Maintainability** | The change remains understandable and does not create unjustified future work. | Scope and complexity deltas, ownership/coupling review, recurring maintenance effort, and identified debt with an owner. |
+| **Operational quality** | Deployments and incidents remain observable and recoverable. | Change failure rate, time to restore service (MTTR), production regressions, rollback outcomes, and incident recurrence. |
+
+These measures have different time horizons:
+
+- **Before release:** establish applicable acceptance, regression, static, security, integration, and performance evidence for the exact candidate.
+- **During rollout:** observe actual behavior when authorized, with suitable monitoring, ownership, and a recovery plan for consequential changes.
+- **After release:** evaluate operational outcomes and incident patterns. Change failure rate and MTTR are project-level trends, not claims that can be proven by a green pre-release pipeline.
+
+A meaningful numerical threshold needs an agreed scope, workload or observation window, and baseline. When a numeric threshold would be false precision, use explicit observable pass/fail conditions and a named risk owner instead. Never invent a universal complexity score, minimum coverage percentage, or acceptable failure rate.
+
+Do not equate an empty finding report with an absence of defects. An unavailable check remains unavailable; an untested failure mode remains unknown. Material exceptions need the appropriate authority rather than silent dismissal.
+
+Operational experience is project knowledge. When people who maintain or operate a feature discover a recurring failure, investigate the mechanism and determine whether a regression test, contract, static rule, observability check, or recovery procedure should capture it. Record the exception when the lesson does not transfer.
+
+The objective is not maximum checking. It is enough relevant, falsifiable evidence to support the next safe decision, followed by truthful observation of what happens in production.
 
 ---
 
@@ -1800,6 +1847,8 @@ Codelight rejects:
 - self-confirming tests,
 - producer-only verification of consumer contracts,
 - performance claims without measurement,
+- universal quality scores or test counts substituted for evidence of relevant risks,
+- production reliability claimed from pre-release checks alone,
 - destructive action inferred from tool capability,
 - local credentials treated as permission,
 - generated projections silently becoming authority,
@@ -1829,6 +1878,7 @@ A non-trivial change is done when all applicable items are true:
 - [ ] Assumptions and unknowns are explicit.
 - [ ] Search coverage limitations are explicit where relevant.
 - [ ] Material assumptions were verified where practical.
+- [ ] Project impact, affected users, likely failure modes, and recovery options informed the verification depth.
 - [ ] The implementation is the smallest coherent semantic change.
 - [ ] Unrelated and concurrent work was preserved.
 - [ ] Ownership boundaries were respected.
@@ -1838,6 +1888,7 @@ A non-trivial change is done when all applicable items are true:
 - [ ] Relevant integration or consumer checks ran.
 - [ ] Evidence is bound to exact state identity where needed.
 - [ ] Performance claims have measured before/after evidence.
+- [ ] Applicable quality criteria have observable evidence or an explicit unresolved gap; production outcomes are not claimed before observation.
 - [ ] Security, failure behavior, compatibility, recovery, and tool side effects were reviewed.
 - [ ] Failed or blocked validation is recorded honestly.
 - [ ] Consequential actions had explicit authority.
@@ -1875,6 +1926,8 @@ When context is constrained, retain this section.
 19. **Forget deliberately. Supersede stale or harmful guidance.**
 20. **Persist state, not cognition.**
 21. **Stop only at genuine human authority boundaries.**
+22. **Preserve goals and execution boundaries.** Apply corrections without losing intent; continue within actual authority and runtime; distinguish DONE, BLOCKED, and HANDOFF.
+23. **Match quality evidence to project risk.** Set relevant expectations before checking, distinguish pre-release proof from production observation, and turn recurring failures into project-specific protection.
 
 ---
 
