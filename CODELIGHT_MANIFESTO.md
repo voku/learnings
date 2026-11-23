@@ -995,7 +995,7 @@ Do not return already delegated routine decisions to the human. Before yielding 
 
 Use the smallest reliable evidence that addresses the actual risk.
 
-Broaden only when shared impact justifies it. Assess business consequence, affected users and data, historical failure patterns, change surface, detectability, and reversibility. A developer's project experience is useful risk evidence, but neither experience nor a passing suite substitutes for verifying the relevant behavior.
+Broaden only when shared impact justifies it. Assess business consequence, affected users and data, historical failure patterns, change surface, detectability, and reversibility. A developer's project experience helps identify likely failure modes, but neither experience nor a passing suite proves that the relevant behavior is correct.
 
 Typical progression:
 
